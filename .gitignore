@@ -1,0 +1,26 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Temporary & local scratch files
+scratch/
+brain/
+*.log
+*.tmp
+*.bak
+
+# Static uploaded raw videos (keep directory structure)
+static/uploads/*
+!static/uploads/.gitkeep
+
+# OS generated files
+.DS_Store
+Thumbs.db
