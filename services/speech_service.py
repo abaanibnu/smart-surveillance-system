@@ -1,21 +1,25 @@
 import os
 import shutil
-import imageio_ffmpeg
+
+try:
+    import imageio_ffmpeg
+    # Ensure ffmpeg binary is accessible as 'ffmpeg.exe' on PATH for Whisper (Windows)
+    _ffmpeg_src = imageio_ffmpeg.get_ffmpeg_exe()
+    _ffmpeg_dir = os.path.dirname(_ffmpeg_src)
+    _ffmpeg_dst = os.path.join(_ffmpeg_dir, "ffmpeg.exe")
+
+    if not os.path.exists(_ffmpeg_dst):
+        try:
+            shutil.copy(_ffmpeg_src, _ffmpeg_dst)
+        except Exception as e:
+            pass
+
+    if _ffmpeg_dir not in os.environ.get("PATH", ""):
+        os.environ["PATH"] = _ffmpeg_dir + os.pathsep + os.environ.get("PATH", "")
+except Exception:
+    pass
+
 import whisper
-
-# Ensure ffmpeg binary is accessible as 'ffmpeg.exe' on PATH for Whisper
-_ffmpeg_src = imageio_ffmpeg.get_ffmpeg_exe()
-_ffmpeg_dir = os.path.dirname(_ffmpeg_src)
-_ffmpeg_dst = os.path.join(_ffmpeg_dir, "ffmpeg.exe")
-
-if not os.path.exists(_ffmpeg_dst):
-    try:
-        shutil.copy(_ffmpeg_src, _ffmpeg_dst)
-    except Exception as e:
-        print(f"Warning: could not create ffmpeg.exe alias: {e}")
-
-if _ffmpeg_dir not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = _ffmpeg_dir + os.pathsep + os.environ.get("PATH", "")
 
 class VoiceQueryHandler:
     """

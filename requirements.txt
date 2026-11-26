@@ -10,5 +10,6 @@ faiss-cpu>=1.7.4
 rdflib>=7.0.0
 cryptography>=41.0.0
 openai-whisper>=20231117
+imageio-ffmpeg>=0.4.8
 qrcode>=7.4.2
 psutil>=5.9.0
